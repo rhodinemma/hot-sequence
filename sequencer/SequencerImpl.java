@@ -1,8 +1,5 @@
 package sequencer;
 
-import sequencer.Sequencer;
-import sequencer.History;
-
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -26,7 +23,7 @@ public class SequencerImpl extends UnicastRemoteObject implements Sequencer {
     String name;
     int sequenceNo;
 
-    public SequencerImpl(String string) {
+    public SequencerImpl(String string) throws RemoteException {
         this.name = string;
         try {
             history = new History();
@@ -88,10 +85,10 @@ public class SequencerImpl extends UnicastRemoteObject implements Sequencer {
 
     @Override
     public byte[] getMissing(String sender, long sequence) throws RemoteException, SequencerException {
-        byte exist[] = history.getMsg(sequence);
+        byte[] exist = history.getMsg(sequence);
         if (exist != null)// if the number is there
         {
-            System.out.print("SSequencer gets missing" + sequence);
+            System.out.print("Sequencer gets missing" + sequence);
             return exist;
         } else {
             System.out.print("Sequencer couldn't get sequence number" + sequence);
